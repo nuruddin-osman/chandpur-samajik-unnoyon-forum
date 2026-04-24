@@ -22,13 +22,13 @@ import {
 
 const FieldWrapper = ({ label, required, error, icon, children }) => (
   <div className="flex flex-col gap-1.5">
-    <label className="text-sm font-medium text-[--color-text]">
+    <label className="text-sm font-medium text-text">
       {label}
       {required && <span className="text-red-500 ml-0.5">*</span>}
     </label>
     <div className="relative">
       {icon && (
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[--color-border] text-base z-10">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-border-prim text-base z-10">
           {icon}
         </span>
       )}
@@ -39,8 +39,8 @@ const FieldWrapper = ({ label, required, error, icon, children }) => (
 );
 
 const inputBaseClass =
-  "w-full h-11 bg-white border rounded-xl pl-10 pr-3 text-sm text-[--color-text] outline-none transition-all duration-200 placeholder:text-gray-400 focus:ring-2";
-const inputClass = `${inputBaseClass} border-[--color-border] focus:border-[--color-button-bg] focus:ring-[--color-button-bg]/20`;
+  "w-full h-11 bg-white border rounded-xl pl-10 pr-3 text-sm text-text outline-none transition-all duration-200 placeholder:text-gray-400 focus:ring-2";
+const inputClass = `${inputBaseClass} border-border-prim focus:border-button-bg focus:ring-button-bg/20`;
 const inputErrorClass = `${inputBaseClass} border-red-300 focus:border-red-500 focus:ring-red-100`;
 const selectClass = `${inputClass} appearance-none cursor-pointer`;
 
@@ -56,10 +56,10 @@ const IconSelect = ({ className, icon, children, ...props }) => (
 
 const SectionLabel = ({ children }) => (
   <div className="flex items-center gap-3 py-5">
-    <span className="text-base font-semibold tracking-wider uppercase text-[--color-heading] font-[--font-playfair]">
+    <span className="text-base font-semibold tracking-wider uppercase text-heading font-playfair">
       {children}
     </span>
-    <div className="flex-1 h-px bg-[--color-border]/30" />
+    <div className="flex-1 h-px bg-border-prim/30" />
   </div>
 );
 
@@ -120,16 +120,16 @@ const page = () => {
     setSubmittedType("");
   };
   return (
-    <div className="min-h-screen bg-[--color-section-bg] py-10 px-4 font-[--font-inter]">
+    <div className="min-h-screen bg-section-bg-gray py-10 px-4 font-inter">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white rounded-t-2xl shadow-sm px-8 pt-8 pb-6 text-center border-b border-[--color-border]/20">
-          <div className="w-14 h-14 bg-[--color-button-bg]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <FiUsers className="text-[--color-button-bg] text-2xl" />
+        <div className="bg-white rounded-t-2xl shadow-sm px-8 pt-8 pb-6 text-center border-b border-border-prim/20">
+          <div className="w-14 h-14 bg-button-bg/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <FiUsers className="text-button-bg text-2xl" />
           </div>
-          <h1 className="text-2xl font-bold text-[--color-heading] font-[--font-playfair]">
+          <h1 className="text-2xl font-bold text-heading font-playfair">
             সদস্য নিবন্ধন
           </h1>
-          <p className="text-[--color-text] text-sm mt-1 opacity-80">
+          <p className="text-text text-sm mt-1 opacity-80">
             সংগঠনের সদস্যপদের জন্য ফর্মটি পূরণ করুন
           </p>
         </div>
@@ -374,7 +374,7 @@ const page = () => {
                   <button
                     type="button"
                     onClick={() => setShowPass(!showPass)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[--color-button-bg]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-button-bg"
                   >
                     {showPass ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                   </button>
@@ -414,7 +414,7 @@ const page = () => {
                   <button
                     type="button"
                     onClick={() => setShowConfirm(!showConfirm)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[--color-button-bg]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-button-bg"
                   >
                     {showConfirm ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                   </button>
@@ -426,17 +426,17 @@ const page = () => {
               <input
                 type="checkbox"
                 id="terms"
-                className="mt-0.5 accent-[--color-button-bg] w-4 h-4"
+                className="mt-0.5 accent-button-bg w-4 h-4"
                 {...register("terms", {
                   required: "শর্তাবলী মেনে নেওয়া আবশ্যক",
                 })}
               />
               <label
                 htmlFor="terms"
-                className="text-sm text-[--color-text] leading-relaxed cursor-pointer"
+                className="text-sm text-text leading-relaxed cursor-pointer"
               >
                 আমি সংগঠনের{" "}
-                <span className="text-[--color-button-bg] font-medium">
+                <span className="text-button-bg font-medium">
                   নিয়মাবলী ও শর্তাবলী
                 </span>{" "}
                 মেনে নিচ্ছি।
@@ -450,7 +450,7 @@ const page = () => {
 
             <button
               type="submit"
-              className="mt-8 w-full h-12 bg-[--color-button-bg] hover:bg-[--color-button-bg]/90 text-[--color-white-text] rounded-xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] shadow-sm"
+              className="mt-8 w-full h-12 bg-button-bg hover:bg-button-bg/90 text-white-text rounded-xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] shadow-sm"
             >
               নিবন্ধন সম্পন্ন করুন
             </button>

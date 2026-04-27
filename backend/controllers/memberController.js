@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Member = require("../models/memberModel");
+const Notification = require("../models/notification");
 
 // POST /api/members/register
 exports.registerMember = async (req, res) => {
@@ -16,15 +17,13 @@ exports.registerMember = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const member = await Member.create({ ...rest, password: hashed });
 
-    const token = jwt.sign(
-      { id: member._id, role: member.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" },
-    );
+    await Notification.create({
+      memberId: member._id,
+      message: `নতুন সদস্য নিবন্ধনের অনুরোধ: ${member.fullName} (${member.phone})`,
+    });
 
     res.status(201).json({
-      message: "নিবন্ধন সফল হয়েছে",
-      token,
+      message: "নিবন্ধন সফল। Admin অনুমোদনের পর আপনার একাউন্ট সক্রিয় হবে।",
       member: { ...member.toObject(), password: undefined },
     });
   } catch (err) {
@@ -39,6 +38,17 @@ exports.loginMember = async (req, res) => {
     const member = await Member.findOne({ phone }).select("+password");
     if (!member)
       return res.status(404).json({ message: "সদস্য পাওয়া যায়নি" });
+
+    //  Status check
+    if (member.status === "unverified")
+      return res
+        .status(403)
+        .json({ message: "আপনার একাউন্ট এখনো অনুমোদিত হয়নি" });
+
+    if (member.status === "rejected")
+      return res
+        .status(403)
+        .json({ message: "আপনার নিবন্ধন প্রত্যাখ্যাত হয়েছে" });
 
     const match = await bcrypt.compare(password, member.password);
     if (!match) return res.status(401).json({ message: "পাসওয়ার্ড ভুল" });

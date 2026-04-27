@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const memberRoutes = require("./routes/memberRoutes");
+const adminNotificationRoutes = require("./routes/adminNotificationRoutes");
 const cors = require("cors");
 
 // Middleware
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", memberRoutes);
+app.use("/api", adminNotificationRoutes);
 
 //routes error handller
 app.use((req, res, next) => {

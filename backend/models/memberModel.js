@@ -25,6 +25,11 @@ const memberSchema = new mongoose.Schema(
       required: true,
       enum: ["paid", "non-paid"],
     },
+    status: {
+      type: String,
+      enum: ["unverified", "verified", "rejected"],
+      default: "unverified",
+    },
     password: { type: String, required: true, select: false },
     role: { type: String, enum: ["member", "admin"], default: "member" },
   },

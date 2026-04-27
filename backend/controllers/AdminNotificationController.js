@@ -1,0 +1,62 @@
+const Notification = require("../models/notification");
+
+// GET /api/admin/notifications  — সব pending notification দেখো
+exports.getNotifications = async (req, res) => {
+  try {
+    const notifications = await Notification.find()
+      .populate("memberId", "fullName phone village memberType createdAt")
+      .sort({ createdAt: -1 });
+
+    res.json({ notifications });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// PATCH /api/admin/members/:id/approve  — Approve
+exports.approveMember = async (req, res) => {
+  try {
+    const member = await Member.findByIdAndUpdate(
+      req.params.id,
+      { status: "verified" },
+      { new: true },
+    );
+    if (!member)
+      return res.status(404).json({ message: "সদস্য পাওয়া যায়নি" });
+
+    // Notification টা read করা হয়েছে mark করো
+    await Notification.findOneAndUpdate(
+      { memberId: member._id },
+      { isRead: true },
+    );
+
+    res.json({
+      message: `${member.fullName} কে অনুমোদন দেওয়া হয়েছে`,
+      member,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// PATCH /api/admin/members/:id/reject  — Reject
+exports.rejectMember = async (req, res) => {
+  try {
+    const member = await Member.findByIdAndUpdate(
+      req.params.id,
+      { status: "rejected" },
+      { new: true },
+    );
+    if (!member)
+      return res.status(404).json({ message: "সদস্য পাওয়া যায়নি" });
+
+    await Notification.findOneAndUpdate(
+      { memberId: member._id },
+      { isRead: true },
+    );
+
+    res.json({ message: `${member.fullName} কে প্রত্যাখ্যান করা হয়েছে` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

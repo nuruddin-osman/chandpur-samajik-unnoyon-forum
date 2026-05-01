@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import { FiPhone, FiLock, FiEye, FiEyeOff, FiUsers } from "react-icons/fi";
-import { Router } from "next/router";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/store/auth/authSlice";
 
 const FieldWrapper = ({ label, required, error, icon, children }) => (
   <div className="flex flex-col gap-1.5">
@@ -34,6 +35,7 @@ const inputErrorClass = `${inputBaseClass} border-red-300 focus:border-red-500 f
 const LoginPage = () => {
   const [showPass, setShowPass] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -48,7 +50,23 @@ const LoginPage = () => {
         data,
       );
       console.log(response.data);
-      toast.success("লগইন সফল!");
+      const rawToken = response.data.token.replace("Bearer ", "");
+      console.log(rawToken);
+
+      // Step 2: Token দিয়ে user info fetch করো
+      // তোমার backend এ /api/members/:id আছে, কিন্তু আগে id দরকার
+      // JWT decode করে id বের করো
+      const payload = JSON.parse(atob(rawToken.split(".")[1]));
+      const ID = payload.id;
+
+      const userRes = await axios.get(
+        `http://localhost:5000/api/members/${ID}`,
+        { headers: { Authorization: `Bearer ${rawToken}` } },
+      );
+
+      dispatch(setCredentials({ token: rawToken, user: userRes.data }));
+
+      toast.success(response.data.message);
       router.push("/");
     } catch (error) {
       const msg = error.response?.data?.message || "কিছু একটা সমস্যা হয়েছে";
@@ -58,7 +76,6 @@ const LoginPage = () => {
 
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} />
       <div className="min-h-screen bg-section-bg-gray flex items-center justify-center py-10 px-4 font-inter">
         <div className="w-full max-w-md">
           {/* Header */}

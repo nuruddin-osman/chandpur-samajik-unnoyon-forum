@@ -69,7 +69,7 @@ const Navbar = () => {
         {/* ── Desktop Auth Buttons ── */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/login"
+            href="/pages/login"
             className="px-4 py-2 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-200"
           >
             লগইন
@@ -117,7 +117,7 @@ const Navbar = () => {
 
         <div className="flex flex-col gap-2 px-8 py-4 border-t border-border-prim">
           <Link
-            href="/login"
+            href="/pages/login"
             onClick={() => setMenuOpen(false)}
             className="w-full text-center px-4 py-2.5 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-150"
           >

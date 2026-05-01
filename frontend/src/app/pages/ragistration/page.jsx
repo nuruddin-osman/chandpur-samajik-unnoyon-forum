@@ -91,7 +91,7 @@ const getPasswordStrength = (pw) => {
   return { score, label: labels[score], color: colors[score] };
 };
 
-const page = () => {
+const RegistrationPage = () => {
   const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -476,6 +476,15 @@ const page = () => {
               >
                 নিবন্ধন সম্পন্ন করুন
               </button>
+              <p className="text-center text-sm text-text mt-4 opacity-70">
+                আপনার একাউন্ট আছে?{" "}
+                <a
+                  href="/pages/login"
+                  className="text-button-bg font-medium hover:underline"
+                >
+                  লগইন করুন
+                </a>
+              </p>
             </form>
           </div>
         </div>
@@ -484,4 +493,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default RegistrationPage;

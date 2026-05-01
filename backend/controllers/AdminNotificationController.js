@@ -1,13 +1,20 @@
+const Member = require("../models/memberModel");
 const Notification = require("../models/notification");
 
-// GET /api/admin/notifications  — সব pending notification দেখো
 exports.getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find()
-      .populate("memberId", "fullName phone village memberType createdAt")
+      .populate({
+        path: "memberId",
+        match: { role: "member", status: "unverified" },
+        select: "fullName phone village memberType createdAt",
+      })
       .sort({ createdAt: -1 });
 
-    res.json({ notifications });
+    // populate match dont match memberId null, then remove it
+    const filtered = notifications.filter((n) => n.memberId !== null);
+
+    res.json({ notifications: filtered });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -18,7 +25,7 @@ exports.approveMember = async (req, res) => {
   try {
     const member = await Member.findByIdAndUpdate(
       req.params.id,
-      { status: "verified" },
+      { role: "member", status: "verified" },
       { new: true },
     );
     if (!member)
@@ -44,7 +51,7 @@ exports.rejectMember = async (req, res) => {
   try {
     const member = await Member.findByIdAndUpdate(
       req.params.id,
-      { status: "rejected" },
+      { role: "member", status: "rejected" },
       { new: true },
     );
     if (!member)

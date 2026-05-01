@@ -6,10 +6,21 @@ const {
   approveMember,
   rejectMember,
 } = require("../controllers/AdminNotificationController");
-const { isAdmin } = require("../middleware/auth");
+const { isAdmin, verifyToken } = require("../middleware/auth");
 
-router.get("/notifications", isAdmin, getNotifications);
-router.patch("/notifications/members/:id/approve", isAdmin, approveMember);
-router.patch("/notifications/members/:id/reject", isAdmin, rejectMember);
+// routes/adminNotificationRoutes.js
+router.get("/notifications", verifyToken, isAdmin, getNotifications);
+router.patch(
+  "/notifications/members/:id/approve",
+  verifyToken,
+  isAdmin,
+  approveMember,
+);
+router.patch(
+  "/notifications/members/:id/reject",
+  verifyToken,
+  isAdmin,
+  rejectMember,
+);
 
 module.exports = router;

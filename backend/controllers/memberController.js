@@ -17,10 +17,12 @@ exports.registerMember = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const member = await Member.create({ ...rest, password: hashed });
 
-    await Notification.create({
-      memberId: member._id,
-      message: `নতুন সদস্য নিবন্ধনের অনুরোধ: ${member.fullName} (${member.phone})`,
-    });
+    if (member.role !== "admin") {
+      await Notification.create({
+        memberId: member._id,
+        message: `নতুন সদস্য নিবন্ধনের অনুরোধ: ${member.fullName} (${member.phone})`,
+      });
+    }
 
     res.status(201).json({
       message: "নিবন্ধন সফল। Admin অনুমোদনের পর আপনার একাউন্ট সক্রিয় হবে।",

@@ -67,7 +67,7 @@ const LoginPage = () => {
       dispatch(setCredentials({ token: rawToken, user: userRes.data }));
 
       toast.success(response.data.message);
-      router.push("/");
+      router.push("/pages/profile");
     } catch (error) {
       const msg = error.response?.data?.message || "কিছু একটা সমস্যা হয়েছে";
       toast.error(msg);

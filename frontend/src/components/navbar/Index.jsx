@@ -128,21 +128,33 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className="flex flex-col gap-2 px-8 py-4 border-t border-border-prim">
-          <Link
-            href="/pages/login"
-            onClick={() => setMenuOpen(false)}
-            className="w-full text-center px-4 py-2.5 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-150"
-          >
-            লগইন
-          </Link>
-          <Link
-            href="/pages/ragistration"
-            className="w-full text-center px-4 py-2.5 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg hover:opacity-90 transition-all duration-150"
-          >
-            রেজিস্ট্রেশন
-          </Link>
-        </div>
+        {token ? (
+          <div className="flex flex-col gap-2 px-8 py-4 border-t border-border-prim">
+            <Link
+              href="/pages/profile"
+              onClick={() => setMenuOpen(false)}
+              className="w-full text-center px-4 py-2.5 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-150"
+            >
+              Profile
+            </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2 px-8 py-4 border-t border-border-prim">
+            <Link
+              href="/pages/login"
+              onClick={() => setMenuOpen(false)}
+              className="w-full text-center px-4 py-2.5 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-150"
+            >
+              লগইন
+            </Link>
+            <Link
+              href="/pages/ragistration"
+              className="w-full text-center px-4 py-2.5 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg hover:opacity-90 transition-all duration-150"
+            >
+              রেজিস্ট্রেশন
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

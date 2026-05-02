@@ -12,6 +12,7 @@ import {
 } from "react-icons/md";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
+import { useSelector } from "react-redux";
 
 const navLinks = [
   { label: "সম্পর্কে", href: "/", icon: <MdOutlineExplore size={16} /> },
@@ -34,6 +35,7 @@ const navLinks = [
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, token } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -67,20 +69,31 @@ const Navbar = () => {
         </ul>
 
         {/* ── Desktop Auth Buttons ── */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/pages/login"
-            className="px-4 py-2 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-200"
-          >
-            লগইন
-          </Link>
-          <Link
-            href="/pages/ragistration"
-            className="px-5 py-2 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg shadow-md hover:opacity-90 transition-all duration-200"
-          >
-            রেজিস্ট্রেশন
-          </Link>
-        </div>
+        {token ? (
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/pages/profile"
+              className="px-5 py-2 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg shadow-md hover:opacity-90 transition-all duration-200"
+            >
+              Profile
+            </Link>
+          </div>
+        ) : (
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/pages/login"
+              className="px-4 py-2 text-sm font-inter font-medium text-text hover:text-white-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-200"
+            >
+              লগইন
+            </Link>
+            <Link
+              href="/pages/ragistration"
+              className="px-5 py-2 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg shadow-md hover:opacity-90 transition-all duration-200"
+            >
+              রেজিস্ট্রেশন
+            </Link>
+          </div>
+        )}
 
         {/* ── Mobile Hamburger ── */}
         <button

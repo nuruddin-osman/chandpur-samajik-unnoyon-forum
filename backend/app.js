@@ -15,9 +15,9 @@ app.get("/", (req, res) => {
   res.send("api working");
 });
 
+app.use("/api", uploadFile);
 app.use("/api", memberRoutes);
 app.use("/api", adminNotificationRoutes);
-app.use("/api", uploadFile);
 
 //routes error handller
 app.use((req, res, next) => {

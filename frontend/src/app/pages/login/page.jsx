@@ -61,12 +61,9 @@ const LoginPage = () => {
       const res = await axios.get(`http://localhost:5000/api/members/${ID}`, {
         headers: { Authorization: `Bearer ${rawToken}` },
       });
+      console.log(res.data);
 
       const user = res.data;
-
-      //  localStorage
-      localStorage.setItem("token", rawToken);
-      localStorage.setItem("user", JSON.stringify(user));
 
       //  redux
       dispatch(setCredentials({ token: rawToken, user }));

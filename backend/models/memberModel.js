@@ -1,3 +1,5 @@
+// memberModel.js
+
 const mongoose = require("mongoose");
 
 const memberSchema = new mongoose.Schema(
@@ -32,6 +34,7 @@ const memberSchema = new mongoose.Schema(
     },
     password: { type: String, required: true, select: false },
     role: { type: String, enum: ["member", "admin"], default: "member" },
+    profileImage: { type: String, default: "" },
   },
   { timestamps: true },
 );

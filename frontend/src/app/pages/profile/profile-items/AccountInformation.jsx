@@ -11,6 +11,7 @@ import {
   FiCreditCard,
   FiCalendar,
 } from "react-icons/fi";
+import ProfilePic from "../fileUpload/ProfilePic";
 
 const InfoRow = ({ icon, label, value }) =>
   value ? (
@@ -38,9 +39,10 @@ const AccountInformation = ({ user }) => {
     <div>
       {/* Profile card top */}
       <div className="flex flex-col items-center text-center py-6 border-b border-gray-100 mb-2">
-        <div className="w-16 h-16 rounded-2xl bg-button-bg/10 flex items-center justify-center mb-3">
+        {/* <div className="w-16 h-16 rounded-2xl bg-button-bg/10 flex items-center justify-center mb-3">
           <FiUser className="text-button-bg text-2xl" />
-        </div>
+        </div> */}
+        <ProfilePic />
         <h2 className="text-lg font-bold text-heading font-playfair">
           {user?.fullName}
         </h2>

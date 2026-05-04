@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { RiFlashlightFill } from "react-icons/ri";
 import {
   MdOutlineExplore,
   MdOutlinePriceChange,
@@ -35,7 +34,15 @@ const navLinks = [
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <>
@@ -45,10 +52,10 @@ const Navbar = () => {
           <div className="relative w-20 h-20 md:w-24 md:h-24">
             <Image
               src={Logo}
-              alt="Logo"
               fill
+              sizes="(max-width: 768px) 100vw, 120px"
               className="object-contain"
-              priority
+              alt="Logo"
             />
           </div>
         </Link>

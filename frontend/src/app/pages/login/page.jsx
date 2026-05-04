@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { FiPhone, FiLock, FiEye, FiEyeOff, FiUsers } from "react-icons/fi";
@@ -34,6 +34,7 @@ const inputErrorClass = `${inputBaseClass} border-red-300 focus:border-red-500 f
 
 const LoginPage = () => {
   const [showPass, setShowPass] = useState(false);
+  const [userData, setUserData] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -49,22 +50,26 @@ const LoginPage = () => {
         "http://localhost:5000/api/members/login",
         data,
       );
-      console.log(response.data);
-      const rawToken = response.data.token.replace("Bearer ", "");
-      console.log(rawToken);
 
-      // Step 2: Token দিয়ে user info fetch করো
-      // তোমার backend এ /api/members/:id আছে, কিন্তু আগে id দরকার
-      // JWT decode করে id বের করো
+      const rawToken = response.data.token.replace("Bearer ", "");
+
+      // decode token
       const payload = JSON.parse(atob(rawToken.split(".")[1]));
       const ID = payload.id;
 
-      const userRes = await axios.get(
-        `http://localhost:5000/api/members/${ID}`,
-        { headers: { Authorization: `Bearer ${rawToken}` } },
-      );
+      //  user fetch directly
+      const res = await axios.get(`http://localhost:5000/api/members/${ID}`, {
+        headers: { Authorization: `Bearer ${rawToken}` },
+      });
 
-      dispatch(setCredentials({ token: rawToken, user: userRes.data }));
+      const user = res.data;
+
+      //  localStorage
+      localStorage.setItem("token", rawToken);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      //  redux
+      dispatch(setCredentials({ token: rawToken, user }));
 
       toast.success(response.data.message);
       router.push("/pages/profile");

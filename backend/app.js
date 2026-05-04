@@ -5,6 +5,7 @@ const memberRoutes = require("./routes/memberRoutes");
 const adminNotificationRoutes = require("./routes/adminNotificationRoutes");
 const uploadFile = require("./routes/uploadFileRoutes");
 const cors = require("cors");
+const path = require("path");
 
 // Middleware
 app.use(cors());
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
   res.send("api working");
 });
 
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/api", uploadFile);
 app.use("/api", memberRoutes);
 app.use("/api", adminNotificationRoutes);

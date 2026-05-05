@@ -79,7 +79,7 @@ const Navbar = () => {
         {token ? (
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/pages/profile"
+              href="/client/profile"
               className="px-5 py-2 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg shadow-md hover:opacity-90 transition-all duration-200"
             >
               Profile
@@ -88,13 +88,13 @@ const Navbar = () => {
         ) : (
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/pages/login"
+              href="/client/login"
               className="px-4 py-2 text-sm font-inter font-medium text-text hover:text-white-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-200"
             >
               লগইন
             </Link>
             <Link
-              href="/pages/ragistration"
+              href="/client/ragistration"
               className="px-5 py-2 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg shadow-md hover:opacity-90 transition-all duration-200"
             >
               রেজিস্ট্রেশন
@@ -138,7 +138,7 @@ const Navbar = () => {
         {token ? (
           <div className="flex flex-col gap-2 px-8 py-4 border-t border-border-prim">
             <Link
-              href="/pages/profile"
+              href="/client/profile"
               onClick={() => setMenuOpen(false)}
               className="w-full text-center px-4 py-2.5 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-150"
             >
@@ -148,14 +148,14 @@ const Navbar = () => {
         ) : (
           <div className="flex flex-col gap-2 px-8 py-4 border-t border-border-prim">
             <Link
-              href="/pages/login"
+              href="/client/login"
               onClick={() => setMenuOpen(false)}
               className="w-full text-center px-4 py-2.5 text-sm font-inter font-medium text-text rounded-lg border border-border-prim hover:bg-button-bg transition-all duration-150"
             >
               লগইন
             </Link>
             <Link
-              href="/pages/ragistration"
+              href="/client/ragistration"
               className="w-full text-center px-4 py-2.5 text-sm font-inter font-semibold text-white-text bg-button-bg rounded-lg hover:opacity-90 transition-all duration-150"
             >
               রেজিস্ট্রেশন

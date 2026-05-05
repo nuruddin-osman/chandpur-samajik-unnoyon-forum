@@ -69,7 +69,7 @@ const LoginPage = () => {
       dispatch(setCredentials({ token: rawToken, user }));
 
       toast.success(response.data.message);
-      router.push("/pages/profile");
+      router.push("/client/profile");
     } catch (error) {
       const msg = error.response?.data?.message || "কিছু একটা সমস্যা হয়েছে";
       toast.error(msg);
@@ -156,7 +156,7 @@ const LoginPage = () => {
               <p className="text-center text-sm text-text mt-4 opacity-70">
                 একাউন্ট নেই?{" "}
                 <a
-                  href="/pages/ragistration"
+                  href="/client/ragistration"
                   className="text-button-bg font-medium hover:underline"
                 >
                   নিবন্ধন করুন

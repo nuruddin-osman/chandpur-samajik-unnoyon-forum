@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const memberRoutes = require("./routes/memberRoutes");
 const adminNotificationRoutes = require("./routes/adminNotificationRoutes");
+const committees = require("./routes/committeeRoutes");
 const uploadFile = require("./routes/uploadFileRoutes");
 const cors = require("cors");
 const path = require("path");
@@ -20,6 +21,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/api", uploadFile);
 app.use("/api", memberRoutes);
 app.use("/api", adminNotificationRoutes);
+app.use("/api", committees);
 
 //routes error handller
 app.use((req, res, next) => {

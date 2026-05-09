@@ -32,14 +32,18 @@ const page = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (!token) router.push("/pages/login");
-  }, [token]);
+    if (!token) router.push("/client/login");
+  }, [token, router]);
 
   if (!user) return null;
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/pages/login");
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    router.replace("/client/login");
   };
 
   const handleNav = (key) => {

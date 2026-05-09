@@ -1,6 +1,5 @@
 // dChandaController.js
 
-// GET → একজন member এর সব record
 const dChandaModel = require("../../models/demoModels/dChandaModel");
 const Member = require("../../models/memberModel");
 const createMonthlyChanda = require("../../utils/dChandaCron");
@@ -27,7 +26,7 @@ exports.createChanda = async (req, res) => {
           $setOnInsert: {
             memberId,
             month,
-            amount: amount || 100,
+            amount: amount || 50,
             status: status || "due",
             paidAt: status === "paid" ? new Date() : null,
             note: note || "",
@@ -97,7 +96,28 @@ exports.getMemberChanda = async (req, res) => {
         .json({ message: "শুধু paid সদস্যের চাঁদা দেখা যাবে" });
     }
 
-    const records = await dChandaModel.find({ memberId }).sort({ month: -1 });
+    const { month, year, status } = req.query;
+
+    const filter = { memberId };
+
+    // month + year একসাথে দিলে → "2026-02"
+    if (year && month) {
+      filter.month = `${year}-${month.padStart(2, "0")}`;
+    } else if (year) {
+      // শুধু year দিলে → "2026" দিয়ে শুরু হওয়া সব
+      filter.month = { $regex: `^${year}` };
+    } else if (month) {
+      // শুধু month দিলে → সব বছরের ওই মাস
+      filter.month = { $regex: `-${month.padStart(2, "0")}$` };
+    }
+
+    if (status) filter.status = status;
+
+    // const records = await dChandaModel.find({ memberId }).sort({ month: -1 });
+    const records = await dChandaModel
+      .find(filter)
+      .populate("memberId", "fullName phone")
+      .sort({ month: -1 });
 
     const totalPaid = records
       .filter((r) => r.status === "paid")

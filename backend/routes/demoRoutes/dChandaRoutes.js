@@ -6,15 +6,15 @@ const ctrl = require("../../controllers/demoController/dChandaController");
 const { verifyToken, isAdmin } = require("../../middleware/auth");
 
 // admin
-router.post("/chanda", verifyToken, isAdmin, ctrl.createChanda);
-router.get("/chanda", verifyToken, isAdmin, ctrl.getAllChanda);
-router.patch("/chanda/:id", verifyToken, isAdmin, ctrl.updateChanda);
-router.delete("/chanda/:id", verifyToken, isAdmin, ctrl.deleteChanda);
+router.post("/cron/chanda", verifyToken, isAdmin, ctrl.createChanda);
+router.get("/cron/chanda", verifyToken, isAdmin, ctrl.getAllChanda);
+router.patch("/cron/chanda/:id", verifyToken, isAdmin, ctrl.updateChanda);
+router.delete("/cron/chanda/:id", verifyToken, isAdmin, ctrl.deleteChanda);
 
 // member
-router.get("/chanda/:memberId", verifyToken, ctrl.getMemberChanda);
+router.get("/cron/chanda/:memberId", verifyToken, ctrl.getMemberChanda);
 
 // development — cron test
-router.get("/chanda-run-cron", verifyToken, isAdmin, ctrl.runCronManually);
+router.get("/cron/chanda-run-cron", verifyToken, isAdmin, ctrl.runCronManually);
 
 module.exports = router;

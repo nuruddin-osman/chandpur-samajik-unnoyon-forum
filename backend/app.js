@@ -25,7 +25,7 @@ app.use("/api", memberRoutes);
 app.use("/api", adminNotificationRoutes);
 app.use("/api", committees);
 app.use("/api", chanda);
-app.use("/api/cron", dChanda);
+app.use("/api", dChanda);
 
 //routes error handller
 app.use((req, res, next) => {
